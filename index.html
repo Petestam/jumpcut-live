@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jump Cut Studios</title>
+    <meta property="og:image" content="assets/image4.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+
+    /* ── RESET & TOKENS ─────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    :root {
+        --ink:     #0A0A0A;
+        --paper:   #F4F4F2;
+        --white:   #FFFFFF;
+        --silver:  #A8A8A8;
+        --rule:    #D0D0D0;
+        --rule-dk: #222222;
+        --dim:     #555555;
+        --dim-lt:  #888888;
+        --gutter:  6vw;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background: var(--ink);
+        color: var(--white);
+        font-weight: 300;
+        line-height: 1.6;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    /* subtle noise on dark sections */
+    .dk::after {
+        content: '';
+        position: absolute; inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+        pointer-events: none; z-index: 0; mix-blend-mode: overlay;
+    }
+    .dk > * { position: relative; z-index: 1; }
+
+    /* ── TYPOGRAPHY ─────────────────────────────────── */
+    .display {
+        font-family: 'Syne', sans-serif;
+        font-weight: 800;
+        line-height: 0.95;
+        letter-spacing: -0.02em;
+    }
+    .display-lg  { font-size: clamp(4.5rem, 11vw, 10rem); }
+    .display-md  { font-size: clamp(2.8rem, 6vw,  5.5rem); }
+    .display-sm  { font-size: clamp(1.8rem, 3.5vw, 3rem); }
+
+    .title {
+        font-family: 'Syne', sans-serif;
+        font-weight: 700;
+        line-height: 1.1;
+        letter-spacing: -0.01em;
+        font-size: clamp(1.1rem, 2vw, 1.5rem);
+    }
+
+    .label {
+        font-family: 'Inter', sans-serif;
+        font-weight: 500;
+        font-size: 0.65rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+    }
+
+    .body { font-size: clamp(0.9rem, 1.4vw, 1rem); line-height: 1.75; }
+    .body-lg { font-size: clamp(1rem, 1.8vw, 1.2rem); line-height: 1.75; }
+
+    /* ── LAYOUT ─────────────────────────────────────── */
+    .wrap { max-width: 1320px; margin: 0 auto; padding: 0 var(--gutter); }
+    .section { padding: 8rem var(--gutter); position: relative; }
+    .section-sm { padding: 5rem var(--gutter); position: relative; }
+
+    hr.rule {
+        border: none;
+        border-top: 1px solid var(--rule-dk);
+        width: 100%;
+    }
+    hr.rule-lt {
+        border: none;
+        border-top: 1px solid var(--rule);
+        width: 100%;
+    }
+
+    /* ── DARK / LIGHT ───────────────────────────────── */
+    .dk { background: var(--ink); color: var(--white); }
+    .lt { background: var(--paper); color: var(--ink); }
+    .lt .label { color: var(--dim); }
+    .lt hr.rule { border-color: var(--rule); }
+
+    /* ── NAVIGATION ─────────────────────────────────── */
+    #nav {
+        position: fixed; top: 0; left: 0; right: 0;
+        z-index: 1000;
+        padding: 1.5rem var(--gutter);
+        display: flex; align-items: center; justify-content: space-between;
+        mix-blend-mode: difference;
+    }
+
+    .nav-logo {
+        font-family: 'Syne', sans-serif;
+        font-weight: 800;
+        font-size: 0.85rem;
+        letter-spacing: 0.18em;
+        color: var(--white);
+        text-decoration: none;
+    }
+
+    .nav-right {
+        display: flex; gap: 2.5rem; align-items: center;
+    }
+    .nav-right a {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.72rem;
+        font-weight: 400;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--white);
+        text-decoration: none;
+        opacity: 0.6;
+        transition: opacity 0.25s;
+    }
+    .nav-right a:hover { opacity: 1; }
+    .nav-right a.access {
+        opacity: 1;
+        border-bottom: 1px solid var(--white);
+        padding-bottom: 1px;
+    }
+
+    .hamburger {
+        display: none; flex-direction: column; gap: 5px;
+        background: none; border: none; cursor: pointer; padding: 0;
+    }
+    .hamburger span { width: 20px; height: 1px; background: var(--white); transition: all 0.3s; }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
+
+    .mobile-menu {
+        display: none; position: fixed; inset: 0;
+        background: var(--ink); z-index: 999;
+        flex-direction: column; justify-content: center;
+        align-items: flex-start;
+        padding: 0 var(--gutter); gap: 2rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+        font-family: 'Syne', sans-serif; font-weight: 700;
+        font-size: clamp(2rem, 8vw, 4rem);
+        color: var(--white); text-decoration: none;
+        letter-spacing: -0.01em;
+        transition: opacity 0.2s;
+    }
+    .mobile-menu a:hover { opacity: 0.5; }
+
+    @media (max-width: 860px) {
+        .nav-right { display: none; }
+        .hamburger { display: flex; }
+    }
+
+    /* ── HERO ────────────────────────────────────────── */
+    #hero {
+        height: 100svh;
+        min-height: 600px;
+        display: grid;
+        grid-template-rows: 1fr auto;
+        padding: 0 var(--gutter) 4rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Studio light atmosphere — warm tones, no color */
+    #hero::before {
+        content: '';
+        position: absolute; inset: 0;
+        background:
+            radial-gradient(ellipse 50% 60% at 80% 30%, rgba(255,255,255,0.025) 0%, transparent 70%),
+            radial-gradient(ellipse 40% 50% at 15% 70%, rgba(255,255,255,0.015) 0%, transparent 60%);
+        pointer-events: none;
+    }
+
+    /* Video hero placeholder */
+    .hero-media {
+        position: absolute; inset: 0; z-index: 0; overflow: hidden;
+        background: #070707;
+    }
+    .hero-media video,
+    .hero-media .hero-bg {
+        width: 100%; height: 100%; object-fit: cover;
+        opacity: 0.5;
+    }
+    .hero-media .hero-bg {
+        position: absolute; inset: 0;
+        display: block;
+    }
+    /* Fallback when no image — kept for video-only setups */
+    .hero-media-placeholder {
+        position: absolute; inset: 0;
+        background:
+            linear-gradient(160deg, #141414 0%, #0c0c0c 40%, #101010 70%, #080808 100%);
+    }
+    /* Angled panel shadows — referencing the Agam design language */
+    .hero-media-placeholder::before {
+        content: '';
+        position: absolute;
+        top: 0; right: 0;
+        width: 45%; height: 100%;
+        background: linear-gradient(170deg, rgba(255,255,255,0.015) 0%, transparent 50%);
+        clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+    }
+    .hero-media-placeholder::after {
+        content: '';
+        position: absolute;
+        bottom: 0; left: 0;
+        width: 100%; height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(168,168,168,0.2), transparent);
+    }
+
+    .hero-lower {
+        position: relative; z-index: 2;
+        display: flex; align-items: flex-end; justify-content: space-between;
+        flex-wrap: wrap; gap: 2rem;
+    }
+
+    .hero-wordmark {
+        display: flex; flex-direction: column;
+    }
+    .hero-wordmark .tagline {
+        font-family: 'Inter', sans-serif;
+        font-weight: 300;
+        font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+        color: var(--silver);
+        letter-spacing: 0.05em;
+        margin-top: 1.5rem;
+        max-width: 36ch;
+    }
+
+    .hero-meta {
+        text-align: right;
+        align-self: flex-end;
+    }
+    .hero-meta .label { color: var(--dim); margin-bottom: 0.5rem; display: block; }
+    .hero-meta .scroll-cue {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.65rem;
+        font-weight: 400;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--dim);
+        display: flex; align-items: center; gap: 0.75rem; justify-content: flex-end;
+    }
+    .scroll-cue::before {
+        content: '';
+        display: block; width: 40px; height: 1px; background: var(--dim);
+    }
+
+    /* ── STUDIOS: intro (light) + detail (dark) ──────── */
+    #studios .studios-intro {
+        padding: 7rem var(--gutter) 6rem;
+        position: relative; overflow: hidden;
+    }
+    .canvas-statement {
+        max-width: 900px;
+    }
+    .canvas-statement h2 {
+        font-family: 'Syne', sans-serif;
+        font-weight: 800;
+        font-size: clamp(2rem, 4.5vw, 4rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--ink);
+        margin-bottom: 2rem;
+    }
+    .canvas-statement p {
+        font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+        color: var(--dim);
+        max-width: 54ch;
+        line-height: 1.8;
+    }
+
+    /* Gallery grid — asymmetric, Benjamin Edgar–influenced */
+    .gallery {
+        display: grid;
+        grid-template-columns: 5fr 3fr 4fr;
+        grid-template-rows: 260px 260px;
+        gap: 3px;
+        margin-top: 4rem;
+    }
+    .g-item {
+        background: #1a1a1a;
+        position: relative; overflow: hidden;
+        transition: opacity 0.35s;
+    }
+    .g-item img {
+        position: absolute; inset: 0;
+        width: 100%; height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+    .g-item:hover { opacity: 0.92; }
+    .g-item.span-2 { grid-row: span 2; }
+    .g-item .g-label {
+        position: absolute; bottom: 1rem; left: 1.2rem; z-index: 1;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--white);
+        opacity: 0.85;
+        text-shadow: 0 1px 12px rgba(0,0,0,0.65);
+    }
+    .g-item::after {
+        content: '';
+        position: absolute; inset: 0; z-index: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 45%);
+        pointer-events: none;
+    }
+    .g-item img { z-index: 0; }
+    .g-item .g-label { z-index: 2; }
+
+    #studios .studios-detail {
+        padding: 8rem var(--gutter);
+    }
+
+    .rooms { display: flex; flex-direction: column; }
+    .room {
+        display: grid;
+        grid-template-columns: 80px 1fr 2fr 120px;
+        align-items: start;
+        padding: 2.5rem 0;
+        border-top: 1px solid var(--rule-dk);
+        gap: 2rem;
+        transition: opacity 0.2s;
+    }
+    .room:hover { opacity: 0.75; }
+    .room:last-child { border-bottom: 1px solid var(--rule-dk); }
+
+    .room-num {
+        font-family: 'Syne', sans-serif;
+        font-weight: 800; font-size: 0.75rem;
+        letter-spacing: 0.1em; color: var(--silver);
+        padding-top: 0.15rem;
+    }
+    .room-name {
+        font-family: 'Syne', sans-serif;
+        font-weight: 700;
+        font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+        letter-spacing: -0.01em;
+        line-height: 1.1;
+    }
+    .room-desc {
+        font-size: clamp(0.85rem, 1.3vw, 0.95rem);
+        color: var(--silver);
+        line-height: 1.7;
+        padding-top: 0.2rem;
+    }
+    .room-tag {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.65rem; font-weight: 500;
+        letter-spacing: 0.15em; text-transform: uppercase;
+        color: var(--dim); padding-top: 0.25rem;
+        text-align: right;
+    }
+
+    .rooms-note {
+        margin-top: 2.5rem;
+        font-size: 0.8rem;
+        color: var(--dim);
+        letter-spacing: 0.05em;
+        display: flex; align-items: center; gap: 1rem;
+    }
+    .rooms-note::before {
+        content: ''; display: block;
+        width: 32px; height: 1px; background: var(--rule-dk); flex-shrink: 0;
+    }
+
+    /* ── THE CLUB ─────────────────────────────────────── */
+    #club { padding: 10rem var(--gutter) 8rem; }
+
+    .club-pull {
+        max-width: 800px;
+        margin-bottom: 6rem;
+    }
+    .club-pull h2 {
+        font-family: 'Syne', sans-serif; font-weight: 800;
+        font-size: clamp(2.5rem, 6vw, 5rem);
+        letter-spacing: -0.025em; line-height: 1;
+        margin-top: 1.5rem; margin-bottom: 2rem;
+    }
+    .club-pull p {
+        font-size: clamp(1rem, 1.8vw, 1.2rem);
+        color: var(--silver); line-height: 1.8; max-width: 54ch;
+    }
+    .club-pull strong { color: var(--white); font-weight: 400; }
+
+    .club-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1px;
+        border: 1px solid var(--rule-dk);
+    }
+    .club-block {
+        padding: 2.5rem 2rem;
+        border-right: 1px solid var(--rule-dk);
+        transition: background 0.25s;
+    }
+    .club-block:last-child { border-right: none; }
+    .club-block:hover { background: #111111; }
+    .club-block .label { color: var(--silver); margin-bottom: 1rem; display: block; }
+    .club-block p { font-size: 0.9rem; color: var(--silver); line-height: 1.75; }
+
+    /* ── WHO IT'S FOR ─────────────────────────────────── */
+    #for { padding: 8rem var(--gutter); }
+
+    .for-head { margin-bottom: 5rem; }
+    .for-head h2 {
+        font-family: 'Syne', sans-serif; font-weight: 800;
+        font-size: clamp(2rem, 5vw, 4rem);
+        letter-spacing: -0.02em; color: var(--ink);
+        margin-top: 1.5rem;
+    }
+    .for-head p {
+        color: var(--dim); max-width: 50ch;
+        font-size: 0.95rem; margin-top: 1rem; line-height: 1.75;
+    }
+
+    .for-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 2px;
+    }
+    .for-block {
+        background: #EAEAE8;
+        padding: 2.8rem 2.2rem;
+        display: flex; flex-direction: column;
+        gap: 1rem;
+        transition: background 0.25s;
+        min-height: 280px;
+    }
+    .for-block:hover { background: #E0E0DE; }
+    .for-num {
+        font-family: 'Syne', sans-serif; font-weight: 800;
+        font-size: 3.5rem; line-height: 1;
+        color: var(--rule); letter-spacing: -0.03em;
+    }
+    .for-who {
+        font-family: 'Syne', sans-serif; font-weight: 700;
+        font-size: 1.05rem; letter-spacing: 0.02em;
+        color: var(--ink); margin-top: auto;
+    }
+    .for-copy {
+        font-size: 0.88rem; color: var(--dim); line-height: 1.75;
+    }
+
+    /* ── NETWORK ──────────────────────────────────────── */
+    #network { padding: 8rem var(--gutter); }
+
+    .network-head { margin-bottom: 4rem; }
+    .network-head h2 {
+        font-family: 'Syne', sans-serif; font-weight: 800;
+        font-size: clamp(2rem, 5vw, 4rem);
+        letter-spacing: -0.02em; margin-top: 1.5rem;
+    }
+
+    .cities {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 1px;
+        border: 1px solid var(--rule-dk);
+        margin-bottom: 3rem;
+    }
+    .city {
+        padding: 2.5rem 1.5rem;
+        border-right: 1px solid var(--rule-dk);
+        transition: background 0.25s;
+    }
+    .city:last-child { border-right: none; }
+    .city:hover { background: #111; }
+    .city-name {
+        font-family: 'Syne', sans-serif; font-weight: 800;
+        font-size: clamp(1rem, 2vw, 1.4rem);
+        letter-spacing: -0.01em; margin-bottom: 1.2rem;
+    }
+    .city-detail { font-size: 0.72rem; color: var(--dim); letter-spacing: 0.05em; margin-bottom: 0.4rem; }
+    .city-status {
+        display: flex; align-items: center; gap: 0.5rem;
+        font-size: 0.65rem; font-weight: 500;
+        letter-spacing: 0.12em; text-transform: uppercase;
+        color: var(--silver); margin-top: 1.5rem;
+    }
+    .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--dim); }
+    .dot.live { background: var(--white); animation: blink 2.5s ease infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    .network-note {
+        font-size: 0.85rem; color: var(--silver); max-width: 60ch; line-height: 1.8;
+    }
+
+    /* ── GET IN ───────────────────────────────────────── */
+    #getin { padding: 10rem var(--gutter) 8rem; }
+
+    .getin-headline { margin-bottom: 5rem; max-width: 700px; }
+    .getin-headline h2 {
+        font-family: 'Syne', sans-serif; font-weight: 800;
+        font-size: clamp(2.5rem, 7vw, 6rem);
+        letter-spacing: -0.025em; line-height: 1;
+        color: var(--ink); margin-top: 1.5rem;
+    }
+    .getin-headline p {
+        font-size: 0.95rem; color: var(--dim);
+        max-width: 48ch; line-height: 1.75; margin-top: 1.5rem;
+    }
+
+    .getin-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-bottom: 1.25rem;
+        align-items: center;
+    }
+    .getin-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem 1.75rem;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: opacity 0.25s, background 0.25s, border-color 0.25s;
+        border: 1px solid transparent;
+    }
+    .getin-btn:hover { opacity: 0.88; }
+    .getin-btn-primary {
+        background: var(--ink);
+        color: var(--white);
+    }
+    .getin-btn-secondary {
+        background: transparent;
+        color: var(--ink);
+        border-color: var(--rule);
+    }
+    .getin-btn-secondary:hover { border-color: var(--ink); }
+
+    .getin-note {
+        font-size: 0.85rem;
+        color: var(--dim);
+        max-width: 44ch;
+        line-height: 1.65;
+        margin-bottom: 2.5rem;
+    }
+
+    .getin-routes {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2px;
+        margin-bottom: 3rem;
+        border: 1px solid var(--rule);
+    }
+    .getin-routes a {
+        background: var(--paper);
+        padding: 1.35rem 1.5rem;
+        font-size: 0.78rem;
+        letter-spacing: 0.04em;
+        color: var(--ink);
+        text-decoration: none;
+        transition: background 0.25s;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+    .getin-routes a:hover { background: #E8E8E6; }
+    .getin-routes a span { color: var(--dim); font-size: 0.7rem; letter-spacing: 0.03em; }
+    .getin-routes a em { font-style: normal; color: var(--rule); }
+
+    .getin-contact {
+        display: flex; gap: 2rem; align-items: center;
+        flex-wrap: wrap;
+    }
+    .getin-contact a {
+        font-size: 0.78rem; letter-spacing: 0.1em;
+        color: var(--dim); text-decoration: none;
+        transition: color 0.25s;
+    }
+    .getin-contact a:hover { color: var(--ink); }
+    .contact-sep { color: var(--rule); font-size: 0.8rem; }
+
+    /* ── FOOTER ───────────────────────────────────────── */
+    footer {
+        padding: 2rem var(--gutter);
+        display: flex; justify-content: space-between; align-items: center;
+        flex-wrap: wrap; gap: 1rem;
+        border-top: 1px solid var(--rule);
+    }
+    .foot-brand {
+        font-family: 'Syne', sans-serif; font-weight: 800;
+        font-size: 0.75rem; letter-spacing: 0.2em;
+        color: var(--ink);
+    }
+    .foot-right { font-size: 0.7rem; color: var(--dim); letter-spacing: 0.05em; }
+
+    /* ── ANIMATIONS ───────────────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+    .stagger > .reveal:nth-child(1) { transition-delay: 0s; }
+    .stagger > .reveal:nth-child(2) { transition-delay: 0.08s; }
+    .stagger > .reveal:nth-child(3) { transition-delay: 0.16s; }
+    .stagger > .reveal:nth-child(4) { transition-delay: 0.24s; }
+    .stagger > .reveal:nth-child(5) { transition-delay: 0.32s; }
+
+    /* ── RESPONSIVE ───────────────────────────────────── */
+    @media (max-width: 860px) {
+        :root { --gutter: 5vw; }
+        .room { grid-template-columns: 50px 1fr; }
+        .room-desc, .room-tag { display: none; }
+        .gallery { grid-template-columns: 1fr 1fr; grid-template-rows: 180px 180px 180px; }
+        .g-item.span-2 { grid-row: span 1; }
+        .cities { grid-template-columns: 1fr 1fr; }
+        .city:nth-child(5) { grid-column: span 2; }
+        .club-grid { grid-template-columns: 1fr 1fr; }
+        .club-block { border-right: none; border-bottom: 1px solid var(--rule-dk); }
+        .club-block:nth-child(odd) { border-right: 1px solid var(--rule-dk); }
+    }
+    @media (max-width: 560px) {
+        .gallery { grid-template-columns: 1fr; grid-template-rows: repeat(5, 160px); }
+        .cities { grid-template-columns: 1fr; }
+        .city:nth-child(5) { grid-column: span 1; }
+        .club-grid { grid-template-columns: 1fr; }
+        .club-block { border-right: none !important; }
+        .for-grid { grid-template-columns: 1fr; }
+        .hero-meta { display: none; }
+    }
+    </style>
+</head>
+<body>
+
+<!-- ─── NAV ─────────────────────────────────────── -->
+<nav id="nav">
+    <a href="#" class="nav-logo">JUMP CUT</a>
+    <div class="nav-right">
+        <a href="#studios">Studios</a>
+        <a href="#club">The Club</a>
+        <a href="#network">Network</a>
+        <a href="#getin" class="access">Request Access</a>
+    </div>
+    <button class="hamburger" id="burger" onclick="toggleNav()">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+
+<div class="mobile-menu" id="mobileNav">
+    <a href="#studios" onclick="closeNav()">Studios</a>
+    <a href="#club" onclick="closeNav()">The Club</a>
+    <a href="#network" onclick="closeNav()">Network</a>
+    <a href="#getin" onclick="closeNav()">Request Access</a>
+</div>
+
+<!-- ─── HERO ─────────────────────────────────────── -->
+<section id="hero" class="dk">
+    <div class="hero-media">
+        <!-- Swap .hero-bg for <video> when reel is ready; keep poster on video for LCP -->
+        <img class="hero-bg" src="assets/image4.png" alt="Jump Cut Studios lounge with view into a glass-walled production space" width="1920" height="1080" fetchpriority="high" decoding="async">
+        <!--
+            <video autoplay muted loop playsinline poster="assets/image4.png">
+                <source src="reel.mp4" type="video/mp4">
+            </video>
+        -->
+    </div>
+
+    <div class="hero-lower">
+        <div class="hero-wordmark">
+            <h1 class="display display-lg reveal">JUMP CUT<br>STUDIOS</h1>
+            <p class="tagline reveal">Your roster. Production-ready.</p>
+        </div>
+        <div class="hero-meta reveal">
+            <span class="label">Miami — Est. 2026</span>
+            <div class="scroll-cue">Scroll</div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── STUDIOS & FACILITY (design, gallery, capabilities) ─ -->
+<section id="studios">
+    <div class="studios-intro lt section">
+        <div class="wrap">
+            <div class="canvas-statement reveal">
+                <span class="label">Studios &amp; facility</span>
+                <h2>The walls are black and white.<br>Your brand brings the color.</h2>
+                <p>Jump Cut is built as a neutral stage—textural, minimal, precise: angled panels, LED baseboards, Agam scenic shells. Behind the design is one facility built for the whole deal: identical capture rooms, live-ready infrastructure, edit bays, meeting and activation space, and a clubhouse layer where athletes and partners actually cross paths. Everything the work demands—nothing bolted on for show.</p>
+            </div>
+            <div class="gallery stagger">
+                <div class="g-item span-2 reveal">
+                    <img src="assets/image7.png" alt="Lounge and bar at Jump Cut Studios" loading="lazy" width="800" height="520">
+                    <span class="g-label">Clubhouse</span>
+                </div>
+                <div class="g-item reveal">
+                    <img src="assets/image3.png" alt="Reception and Jump Cut Studios entry" loading="lazy" width="520" height="520">
+                    <span class="g-label">Entry &amp; reception</span>
+                </div>
+                <div class="g-item reveal">
+                    <img src="assets/image6.png" alt="Glass production pods with cameras and lighting" loading="lazy" width="520" height="520">
+                    <span class="g-label">Production studios</span>
+                </div>
+                <div class="g-item reveal">
+                    <img src="assets/image5.png" alt="Lounge seating and streaming-ready space" loading="lazy" width="520" height="520">
+                    <span class="g-label">Live-ready</span>
+                </div>
+                <div class="g-item reveal">
+                    <img src="assets/image2.png" alt="Floor plan overview of Jump Cut Studios" loading="lazy" width="520" height="520">
+                    <span class="g-label">Program</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="studios-detail dk section">
+        <div class="wrap">
+            <div class="rooms stagger">
+                <div class="room reveal">
+                    <div class="room-num">01</div>
+                    <div class="room-name">Production &amp; live</div>
+                    <div class="room-desc">Sound-treated stages for fireside and two-chair interviews, podcast, live selling, and greenscreen when the brief calls for it—each room runs the same formats. Dedicated streaming rigs, product staging, and multi-platform support are part of the building, not a pop-up.</div>
+                    <div class="room-tag">Capture</div>
+                </div>
+                <div class="room reveal">
+                    <div class="room-num">02</div>
+                    <div class="room-name">Standardized equipment</div>
+                    <div class="room-desc">Same cameras, lighting grid, audio path, and streaming backbone in every studio, at every location. Specs don’t drift—what you book in Miami is what you get in the next city.</div>
+                    <div class="room-tag">Network-wide</div>
+                </div>
+                <div class="room reveal">
+                    <div class="room-num">03</div>
+                    <div class="room-name">Post &amp; delivery</div>
+                    <div class="room-desc">Dual-screen edit bays and pro finishing tools—same-day roughs and polish when the schedule demands it. Files route to brand, athlete, and collective with rights documented; nothing ships half-finished.</div>
+                    <div class="room-tag">Finish &amp; ship</div>
+                </div>
+                <div class="room reveal">
+                    <div class="room-num">04</div>
+                    <div class="room-name">Creative direction</div>
+                    <div class="room-desc">On-site directors and shot lists tied to the deal. Platform-specific optimization so what gets created is built to perform—not just to fill a drive.</div>
+                    <div class="room-tag">Direction</div>
+                </div>
+                <div class="room reveal">
+                    <div class="room-num">05</div>
+                    <div class="room-name">Meetings &amp; activations</div>
+                    <div class="room-desc">Briefs, reviews, compliance conversations, and quiet prep—plus configurable space for launches, sponsor events, and media days when the calendar calls for a room that isn’t a set.</div>
+                    <div class="room-tag">Sessions &amp; events</div>
+                </div>
+                <div class="room reveal">
+                    <div class="room-num">06</div>
+                    <div class="room-name">Clubhouse</div>
+                    <div class="room-desc">A real lounge and circulation—not a holding pen. Athletes, brands, and teams cross paths on purpose between sets: coffee, collisions, and the conversations that don’t happen over email.</div>
+                    <div class="room-tag">Between takes</div>
+                </div>
+            </div>
+            <div class="rooms-note reveal">Blackmagic Studio Camera 4K — Nanlite — Shure SM7B — ATEM Mini Pro ISO — Stream Deck XL — repeated across every production studio, every location.</div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── THE CLUB ────────────────────────────────────── -->
+<section id="club" class="dk section">
+    <div class="wrap">
+        <div class="club-pull reveal">
+            <span class="label">The Club</span>
+            <h2>You can hang.<br>But you're here to work.</h2>
+            <p>Jump Cut isn't a studio you rent by the hour. It's a place athletes want to be — and a place <strong>brands want their athletes to be</strong>. The lounge is real. The community is real. But what makes it worth belonging to is what walks out of here: <strong>content that fulfills deals, builds brands, and moves careers forward.</strong></p>
+        </div>
+        <div class="club-grid stagger">
+            <div class="club-block reveal">
+                <span class="label">For Athletes</span>
+                <p>Your deals require content. This is where that content gets made — and it looks better than anything shot on a phone. No cost to you. Your deals fund everything.</p>
+            </div>
+            <div class="club-block reveal">
+                <span class="label">For Brands</span>
+                <p>A dedicated environment for your athlete partnerships. Managed production, branded studio time, live commerce access. Direct pipeline to content that actually closes.</p>
+            </div>
+            <div class="club-block reveal">
+                <span class="label">For NIL Collectives</span>
+                <p>Your athletes need content infrastructure to fulfill their deals. Plug them in. We handle production and delivery. You manage the relationships.</p>
+            </div>
+            <div class="club-block reveal">
+                <span class="label">For Universities</span>
+                <p>Official content partner for your athletic department. Compliance-friendly. Professional outputs. Every athlete on your roster has a space built for them.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── WHO IT'S FOR ───────────────────────────────── -->
+<section id="for" class="lt section">
+    <div class="wrap">
+        <div class="for-head reveal">
+            <span class="label">The Right Room</span>
+            <h2>Built for the people behind the athlete.</h2>
+            <p>Brands want better content. Collectives want fulfilled deals. Universities want athlete development. Agents want their clients positioned correctly. Jump Cut is the answer to all four.</p>
+        </div>
+        <div class="for-grid stagger">
+            <div class="for-block reveal">
+                <div class="for-num">01</div>
+                <div class="for-who">Brands &amp; Sponsors</div>
+                <div class="for-copy">Stop chasing athletes for content. Book the studio. Brief the production team. Receive campaign-ready assets. Your budget produces output, not overhead.</div>
+            </div>
+            <div class="for-block reveal">
+                <div class="for-num">02</div>
+                <div class="for-who">NIL Collectives</div>
+                <div class="for-copy">Content fulfillment built into every deal you structure. Your athletes walk in, create, walk out. You get assets. The brand gets deliverables. Everyone's happy.</div>
+            </div>
+            <div class="for-block reveal">
+                <div class="for-num">03</div>
+                <div class="for-who">Athletic Departments</div>
+                <div class="for-copy">A production facility your roster actually uses. Near campus, built for athletes, operated by people who understand the NIL environment. Compliance-ready.</div>
+            </div>
+            <div class="for-block reveal">
+                <div class="for-num">04</div>
+                <div class="for-who">Athlete Agents</div>
+                <div class="for-copy">Your clients' NIL value compounds when their content is professional. One session here changes the quality of every deal conversation you have next week.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── NETWORK ────────────────────────────────────── -->
+<section id="network" class="dk section">
+    <div class="wrap">
+        <div class="network-head reveal">
+            <span class="label">The Network</span>
+            <h2>Five cities. One standard.</h2>
+        </div>
+        <div class="cities stagger">
+            <div class="city reveal">
+                <div class="city-name">Miami</div>
+                <div class="city-detail">Buena Vista District</div>
+                <div class="city-detail">University of Miami</div>
+                <div class="city-status"><span class="dot live"></span> Live — Summer 2026</div>
+            </div>
+            <div class="city reveal">
+                <div class="city-name">Knoxville</div>
+                <div class="city-detail">Old North District</div>
+                <div class="city-detail">University of Tennessee</div>
+                <div class="city-status"><span class="dot"></span> Opening 2027</div>
+            </div>
+            <div class="city reveal">
+                <div class="city-name">College Station</div>
+                <div class="city-detail">South Corridor</div>
+                <div class="city-detail">Texas A&amp;M</div>
+                <div class="city-status"><span class="dot"></span> Opening 2027</div>
+            </div>
+            <div class="city reveal">
+                <div class="city-name">Austin</div>
+                <div class="city-detail">East Sixth</div>
+                <div class="city-detail">UT Austin</div>
+                <div class="city-status"><span class="dot"></span> Accepting Interest</div>
+            </div>
+            <div class="city reveal">
+                <div class="city-name">Los Angeles</div>
+                <div class="city-detail">Vernon District</div>
+                <div class="city-detail">USC</div>
+                <div class="city-status"><span class="dot"></span> Accepting Interest</div>
+            </div>
+        </div>
+        <p class="network-note reveal">Near campus. Off the main strip. Same signature design in every city. Same equipment. Same standard. Your athletes move between locations and never skip a beat.</p>
+    </div>
+</section>
+
+<!-- ─── GET IN ──────────────────────────────────────── -->
+<section id="getin" class="lt section">
+    <div class="wrap">
+        <div class="getin-headline reveal">
+            <span class="label">Get In</span>
+            <h2>This is invite-first.</h2>
+            <p>We're building the network with the right partners. Inquiries run through email and our intake flow—so we can route you quickly and keep context in one place.</p>
+        </div>
+        <div class="getin-actions reveal">
+            <a class="getin-btn getin-btn-primary" href="mailto:readysetgo@jumpcut.live?subject=Jump%20Cut%20Studios%20inquiry">Email readysetgo@jumpcut.live</a>
+            <a class="getin-btn getin-btn-secondary" href="intake.html">Start intake</a>
+        </div>
+        <p class="getin-note reveal">Use either path. The intake form structures your first pass; email works if you already know what you need. We typically reply within one business day.</p>
+        <div class="getin-routes stagger">
+            <a class="reveal" href="mailto:readysetgo@jumpcut.live?subject=Brand%20partnership%20inquiry"><span>Brand / agency</span><em>→</em></a>
+            <a class="reveal" href="mailto:readysetgo@jumpcut.live?subject=Collective%20inquiry"><span>Collective</span><em>→</em></a>
+            <a class="reveal" href="mailto:readysetgo@jumpcut.live?subject=University%20%2F%20athletic%20department%20inquiry"><span>University</span><em>→</em></a>
+            <a class="reveal" href="mailto:readysetgo@jumpcut.live?subject=Athlete%20representation%20inquiry"><span>Agent / advisor</span><em>→</em></a>
+        </div>
+        <div class="getin-contact reveal">
+            <a href="https://jumpcut.live">jumpcut.live</a>
+            <span class="contact-sep">/</span>
+            <a href="mailto:readysetgo@jumpcut.live">readysetgo@jumpcut.live</a>
+            <span class="contact-sep">/</span>
+            <a href="#">Instagram</a>
+            <span class="contact-sep">/</span>
+            <a href="#">TikTok</a>
+            <span class="contact-sep">/</span>
+            <a href="#">LinkedIn</a>
+        </div>
+    </div>
+</section>
+
+<!-- ─── FOOTER ─────────────────────────────────────── -->
+<footer class="lt">
+    <div class="foot-brand">JUMP CUT STUDIOS</div>
+    <div class="foot-right">© 2026 Jump Cut Studios</div>
+</footer>
+
+<script>
+    // Nav
+    function toggleNav() {
+        document.getElementById('mobileNav').classList.toggle('open');
+        document.getElementById('burger').classList.toggle('active');
+    }
+    function closeNav() {
+        document.getElementById('mobileNav').classList.remove('open');
+        document.getElementById('burger').classList.remove('active');
+    }
+
+    // Scroll reveal
+    const io = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in');
+                io.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>

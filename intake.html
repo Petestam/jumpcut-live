@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jump Cut Studios Intake</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    :root {
+        --ink: #0A0A0A;
+        --paper: #F4F4F2;
+        --white: #FFFFFF;
+        --silver: #A8A8A8;
+        --rule: #D0D0D0;
+        --rule-dk: #222222;
+        --dim: #555555;
+        --gutter: 6vw;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background: var(--paper);
+        color: var(--ink);
+        font-weight: 300;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    .dk { background: var(--ink); color: var(--white); }
+    .lt { background: var(--paper); color: var(--ink); }
+    .label {
+        font-size: 0.65rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        font-weight: 500;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 0 var(--gutter); }
+    .section { padding: 7rem var(--gutter); }
+
+    #nav {
+        position: sticky; top: 0;
+        z-index: 100;
+        background: rgba(10,10,10,0.96);
+        border-bottom: 1px solid var(--rule-dk);
+        padding: 1.25rem var(--gutter);
+        display: flex; justify-content: space-between; align-items: center;
+    }
+    .nav-logo {
+        font-family: 'Syne', sans-serif;
+        font-weight: 800;
+        font-size: 0.82rem;
+        letter-spacing: 0.18em;
+        color: var(--white);
+        text-decoration: none;
+    }
+    .nav-link {
+        color: var(--silver);
+        text-decoration: none;
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+    .nav-link:hover { color: var(--white); }
+
+    .intake-head h1 {
+        font-family: 'Syne', sans-serif;
+        font-size: clamp(2.3rem, 5vw, 4.5rem);
+        line-height: 0.98;
+        letter-spacing: -0.02em;
+        margin-top: 1rem;
+    }
+    .intake-head p {
+        margin-top: 1.5rem;
+        max-width: 58ch;
+        color: var(--dim);
+        line-height: 1.8;
+    }
+
+    .card {
+        margin-top: 3rem;
+        border: 1px solid var(--rule);
+        background: #f7f7f5;
+    }
+    .card-head {
+        padding: 1.2rem 1.5rem;
+        border-bottom: 1px solid var(--rule);
+        display: flex; justify-content: space-between; gap: 1rem; align-items: center;
+    }
+    .card-head h2 {
+        font-family: 'Syne', sans-serif;
+        font-size: 1rem;
+        letter-spacing: 0.01em;
+    }
+    .card-head span { color: var(--dim); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; }
+    .card-body { padding: 1.5rem; display: grid; gap: 1.25rem; }
+
+    .field { display: grid; gap: 0.45rem; }
+    .field label {
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--dim);
+        font-weight: 500;
+    }
+    .field input,
+    .field select,
+    .field textarea {
+        width: 100%;
+        border: 1px solid var(--rule);
+        background: var(--paper);
+        color: var(--ink);
+        padding: 0.85rem 0.95rem;
+        font: inherit;
+    }
+    .field textarea { min-height: 90px; resize: vertical; }
+
+    .slider-row {
+        border-top: 1px solid var(--rule);
+        padding-top: 1rem;
+        display: grid; gap: 0.6rem;
+    }
+    .slider-top {
+        display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+    }
+    .slider-top strong {
+        font-family: 'Syne', sans-serif;
+        font-size: 1.03rem;
+        letter-spacing: -0.01em;
+    }
+    .slider-value {
+        font-size: 0.85rem;
+        color: var(--dim);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+    }
+    input[type="range"] {
+        width: 100%;
+        accent-color: var(--ink);
+    }
+    .slider-help { font-size: 0.84rem; color: var(--dim); line-height: 1.6; }
+
+    .actions {
+        margin-top: 1.6rem;
+        display: flex; flex-wrap: wrap; gap: 0.8rem;
+    }
+    .btn {
+        border: 1px solid transparent;
+        padding: 0.95rem 1.3rem;
+        font-size: 0.72rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        text-decoration: none;
+        cursor: pointer;
+        font-family: 'Inter', sans-serif;
+        font-weight: 500;
+    }
+    .btn-primary { background: var(--ink); color: var(--white); }
+    .btn-secondary { background: transparent; color: var(--ink); border-color: var(--rule); }
+    .btn-secondary:hover { border-color: var(--ink); }
+
+    .helper {
+        margin-top: 1rem;
+        color: var(--dim);
+        font-size: 0.82rem;
+        line-height: 1.65;
+    }
+
+    footer {
+        border-top: 1px solid var(--rule);
+        padding: 1.5rem var(--gutter) 2rem;
+        display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+        font-size: 0.72rem; color: var(--dim);
+    }
+
+    @media (max-width: 760px) {
+        :root { --gutter: 5vw; }
+        .section { padding: 5rem var(--gutter); }
+        .card-head { flex-direction: column; align-items: flex-start; }
+    }
+    </style>
+</head>
+<body>
+    <nav id="nav">
+        <a class="nav-logo" href="index.html">JUMP CUT</a>
+        <a class="nav-link" href="mailto:readysetgo@jumpcut.live">readysetgo@jumpcut.live</a>
+    </nav>
+
+    <main class="lt section">
+        <div class="wrap">
+            <div class="intake-head">
+                <span class="label">Intake</span>
+                <h1>Tell us what you need.<br>Slide to scope it.</h1>
+                <p>Use this quick intake to size your production plan. Once submitted, it opens an email draft to <strong>readysetgo@jumpcut.live</strong> with your selections, so our team can route your inquiry and follow up fast.</p>
+            </div>
+
+            <form class="card" id="intakeForm">
+                <div class="card-head">
+                    <h2>Jump Cut Studios Intake</h2>
+                    <span>2-minute first pass</span>
+                </div>
+
+                <div class="card-body">
+                    <div class="field">
+                        <label for="name">Name</label>
+                        <input id="name" name="name" required>
+                    </div>
+                    <div class="field">
+                        <label for="email">Email</label>
+                        <input id="email" name="email" type="email" required>
+                    </div>
+                    <div class="field">
+                        <label for="org">Organization</label>
+                        <input id="org" name="org" placeholder="Brand, collective, university, or agency">
+                    </div>
+                    <div class="field">
+                        <label for="role">Inquiry Type</label>
+                        <select id="role" name="role">
+                            <option>Brand / Agency</option>
+                            <option>NIL Collective</option>
+                            <option>University / Athletic Department</option>
+                            <option>Agent / Advisor</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+
+                    <div class="slider-row">
+                        <div class="slider-top">
+                            <strong>Athletes / talent in scope</strong>
+                            <div class="slider-value" id="talentOut">5</div>
+                        </div>
+                        <input type="range" id="talent" min="1" max="50" value="5">
+                        <p class="slider-help">How many athletes or creators should this intake cover in the initial rollout?</p>
+                    </div>
+
+                    <div class="slider-row">
+                        <div class="slider-top">
+                            <strong>Monthly content volume</strong>
+                            <div class="slider-value" id="volumeOut">20 assets</div>
+                        </div>
+                        <input type="range" id="volume" min="8" max="120" step="4" value="20">
+                        <p class="slider-help">Estimate final monthly outputs across shorts, stills, long-form, or live clips.</p>
+                    </div>
+
+                    <div class="slider-row">
+                        <div class="slider-top">
+                            <strong>Monthly production budget</strong>
+                            <div class="slider-value" id="budgetOut">$10,000</div>
+                        </div>
+                        <input type="range" id="budget" min="2000" max="60000" step="1000" value="10000">
+                        <p class="slider-help">This helps us suggest the right package and calendar velocity.</p>
+                    </div>
+
+                    <div class="slider-row">
+                        <div class="slider-top">
+                            <strong>Launch urgency</strong>
+                            <div class="slider-value" id="timelineOut">4 weeks</div>
+                        </div>
+                        <input type="range" id="timeline" min="1" max="12" value="4">
+                        <p class="slider-help">1 = immediate launch, 12 = flexible planning window.</p>
+                    </div>
+
+                    <div class="field">
+                        <label for="notes">What are you trying to achieve?</label>
+                        <textarea id="notes" name="notes" placeholder="Campaign goals, deadlines, deliverables, or constraints."></textarea>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="actions">
+                        <button type="submit" class="btn btn-primary">Send intake via email</button>
+                        <a class="btn btn-secondary" href="mailto:readysetgo@jumpcut.live">Email directly</a>
+                    </div>
+                    <p class="helper">Submitting opens your email app with all intake details prefilled. If you prefer, send a direct note to <a href="mailto:readysetgo@jumpcut.live">readysetgo@jumpcut.live</a>.</p>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <div>JUMP CUT STUDIOS</div>
+        <div>© 2026 Jump Cut Studios</div>
+    </footer>
+
+    <script>
+    const fmtMoney = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+    const sliderMap = [
+        { id: 'talent', out: 'talentOut', format: v => `${v}` },
+        { id: 'volume', out: 'volumeOut', format: v => `${v} assets` },
+        { id: 'budget', out: 'budgetOut', format: v => fmtMoney.format(v) },
+        { id: 'timeline', out: 'timelineOut', format: v => `${v} week${v === '1' ? '' : 's'}` }
+    ];
+
+    sliderMap.forEach(({ id, out, format }) => {
+        const el = document.getElementById(id);
+        const outEl = document.getElementById(out);
+        const sync = () => { outEl.textContent = format(el.value); };
+        el.addEventListener('input', sync);
+        sync();
+    });
+
+    document.getElementById('intakeForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const org = document.getElementById('org').value.trim();
+        const role = document.getElementById('role').value;
+        const notes = document.getElementById('notes').value.trim();
+        const talent = document.getElementById('talent').value;
+        const volume = document.getElementById('volume').value;
+        const budget = document.getElementById('budget').value;
+        const timeline = document.getElementById('timeline').value;
+
+        const subject = encodeURIComponent(`Jump Cut intake - ${role}`);
+        const body = encodeURIComponent(
+`Name: ${name}
+Email: ${email}
+Organization: ${org || 'n/a'}
+Inquiry Type: ${role}
+
+Athletes / Talent in Scope: ${talent}
+Monthly Content Volume: ${volume} assets
+Monthly Budget: ${fmtMoney.format(budget)}
+Launch Urgency: ${timeline} week${timeline === '1' ? '' : 's'}
+
+Goals / Notes:
+${notes || 'n/a'}
+`
+        );
+
+        window.location.href = `mailto:readysetgo@jumpcut.live?subject=${subject}&body=${body}`;
+    });
+    </script>
+</body>
+</html>
