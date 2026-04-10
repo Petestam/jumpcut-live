@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jump Cut Studios</title>
+    <title>Jump Cut Studios — Where Athletes Create</title>
+    <meta name="description" content="Professional content studios near campus, built for athletes. NIL content, brand shoots, live commerce — all under one roof. Opening Miami, Summer 2026.">
+    <meta property="og:title" content="Jump Cut Studios — Where Athletes Create">
+    <meta property="og:description" content="Professional studios near campus. Walk in with a deal, walk out with content that hits. NIL shoots, brand campaigns, live commerce. Miami Summer 2026.">
     <meta property="og:image" content="assets/image4.png">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/png" href="assets/image.png">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
 
@@ -177,7 +181,6 @@
         overflow: hidden;
     }
 
-    /* Studio light atmosphere — warm tones, no color */
     #hero::before {
         content: '';
         position: absolute; inset: 0;
@@ -187,7 +190,6 @@
         pointer-events: none;
     }
 
-    /* Video hero placeholder */
     .hero-media {
         position: absolute; inset: 0; z-index: 0; overflow: hidden;
         background: #070707;
@@ -195,19 +197,17 @@
     .hero-media video,
     .hero-media .hero-bg {
         width: 100%; height: 100%; object-fit: cover;
-        opacity: 0.5;
+        opacity: 0.45;
     }
     .hero-media .hero-bg {
         position: absolute; inset: 0;
         display: block;
     }
-    /* Fallback when no image — kept for video-only setups */
     .hero-media-placeholder {
         position: absolute; inset: 0;
         background:
             linear-gradient(160deg, #141414 0%, #0c0c0c 40%, #101010 70%, #080808 100%);
     }
-    /* Angled panel shadows — referencing the Agam design language */
     .hero-media-placeholder::before {
         content: '';
         position: absolute;
@@ -240,7 +240,7 @@
         color: var(--silver);
         letter-spacing: 0.05em;
         margin-top: 1.5rem;
-        max-width: 36ch;
+        max-width: 44ch;
     }
 
     .hero-meta {
@@ -260,6 +260,75 @@
     .scroll-cue::before {
         content: '';
         display: block; width: 40px; height: 1px; background: var(--dim);
+    }
+
+    /* ── PROOF STRIP ──────────────────────────────────── */
+    #proof-strip {
+        padding: 2.2rem var(--gutter);
+        border-top: 1px solid var(--rule-dk);
+        border-bottom: 1px solid var(--rule-dk);
+    }
+    .proof-strip-inner {
+        max-width: 1320px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1.5rem 3rem;
+    }
+    .proof-item {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.68rem;
+        font-weight: 500;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--silver);
+        white-space: nowrap;
+    }
+    @media (max-width: 860px) {
+        .proof-strip-inner {
+            justify-content: flex-start;
+            gap: 1rem 2rem;
+        }
+    }
+
+    /* ── THESIS / WHY NOW ─────────────────────────────── */
+    #thesis { padding: 8rem var(--gutter); }
+    .thesis-inner {
+        max-width: 1320px; margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: start;
+    }
+    .thesis-lead h2 {
+        font-family: 'Syne', sans-serif;
+        font-weight: 800;
+        font-size: clamp(2rem, 4.5vw, 3.5rem);
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+        margin-top: 1.5rem;
+    }
+    .thesis-points {
+        display: flex; flex-direction: column; gap: 2rem;
+        padding-top: 0.5rem;
+    }
+    .thesis-point h3 {
+        font-family: 'Syne', sans-serif;
+        font-weight: 700;
+        font-size: 1rem;
+        letter-spacing: 0.01em;
+        margin-bottom: 0.5rem;
+    }
+    .thesis-point p {
+        font-size: 0.9rem;
+        color: var(--silver);
+        line-height: 1.75;
+        max-width: 48ch;
+    }
+    @media (max-width: 860px) {
+        .thesis-inner { grid-template-columns: 1fr; gap: 3rem; }
     }
 
     /* ── STUDIOS: intro (light) + detail (dark) ──────── */
@@ -286,7 +355,7 @@
         line-height: 1.8;
     }
 
-    /* Gallery grid — asymmetric, Benjamin Edgar–influenced */
+    /* Gallery grid */
     .gallery {
         display: grid;
         grid-template-columns: 5fr 3fr 4fr;
@@ -304,11 +373,12 @@
         width: 100%; height: 100%;
         object-fit: cover;
         display: block;
+        z-index: 0;
     }
     .g-item:hover { opacity: 0.92; }
     .g-item.span-2 { grid-row: span 2; }
     .g-item .g-label {
-        position: absolute; bottom: 1rem; left: 1.2rem; z-index: 1;
+        position: absolute; bottom: 1rem; left: 1.2rem; z-index: 2;
         font-family: 'Inter', sans-serif;
         font-size: 0.65rem;
         font-weight: 500;
@@ -320,12 +390,10 @@
     }
     .g-item::after {
         content: '';
-        position: absolute; inset: 0; z-index: 0;
+        position: absolute; inset: 0; z-index: 1;
         background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 45%);
         pointer-events: none;
     }
-    .g-item img { z-index: 0; }
-    .g-item .g-label { z-index: 2; }
 
     #studios .studios-detail {
         padding: 8rem var(--gutter);
@@ -383,82 +451,145 @@
         width: 32px; height: 1px; background: var(--rule-dk); flex-shrink: 0;
     }
 
-    /* ── THE CLUB ─────────────────────────────────────── */
-    #club { padding: 10rem var(--gutter) 8rem; }
-
-    .club-pull {
-        max-width: 800px;
-        margin-bottom: 6rem;
-    }
-    .club-pull h2 {
-        font-family: 'Syne', sans-serif; font-weight: 800;
-        font-size: clamp(2.5rem, 6vw, 5rem);
-        letter-spacing: -0.025em; line-height: 1;
-        margin-top: 1.5rem; margin-bottom: 2rem;
-    }
-    .club-pull p {
-        font-size: clamp(1rem, 1.8vw, 1.2rem);
-        color: var(--silver); line-height: 1.8; max-width: 54ch;
-    }
-    .club-pull strong { color: var(--white); font-weight: 400; }
-
-    .club-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 1px;
-        border: 1px solid var(--rule-dk);
-    }
-    .club-block {
-        padding: 2.5rem 2rem;
-        border-right: 1px solid var(--rule-dk);
-        transition: background 0.25s;
-    }
-    .club-block:last-child { border-right: none; }
-    .club-block:hover { background: #111111; }
-    .club-block .label { color: var(--silver); margin-bottom: 1rem; display: block; }
-    .club-block p { font-size: 0.9rem; color: var(--silver); line-height: 1.75; }
-
-    /* ── WHO IT'S FOR ─────────────────────────────────── */
-    #for { padding: 8rem var(--gutter); }
-
-    .for-head { margin-bottom: 5rem; }
-    .for-head h2 {
+    /* ── HOW IT WORKS ─────────────────────────────────── */
+    #how { padding: 8rem var(--gutter); }
+    .how-head { margin-bottom: 4rem; }
+    .how-head h2 {
         font-family: 'Syne', sans-serif; font-weight: 800;
         font-size: clamp(2rem, 5vw, 4rem);
         letter-spacing: -0.02em; color: var(--ink);
         margin-top: 1.5rem;
     }
-    .for-head p {
+    .how-head p {
         color: var(--dim); max-width: 50ch;
         font-size: 0.95rem; margin-top: 1rem; line-height: 1.75;
     }
-
-    .for-grid {
+    .how-steps {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        grid-template-columns: repeat(4, 1fr);
         gap: 2px;
     }
-    .for-block {
+    .how-step {
         background: #EAEAE8;
-        padding: 2.8rem 2.2rem;
+        padding: 2.8rem 2rem;
         display: flex; flex-direction: column;
         gap: 1rem;
         transition: background 0.25s;
-        min-height: 280px;
+        min-height: 260px;
     }
-    .for-block:hover { background: #E0E0DE; }
-    .for-num {
+    .how-step:hover { background: #E0E0DE; }
+    .how-num {
         font-family: 'Syne', sans-serif; font-weight: 800;
-        font-size: 3.5rem; line-height: 1;
+        font-size: 3rem; line-height: 1;
         color: var(--rule); letter-spacing: -0.03em;
     }
-    .for-who {
+    .how-title {
         font-family: 'Syne', sans-serif; font-weight: 700;
         font-size: 1.05rem; letter-spacing: 0.02em;
         color: var(--ink); margin-top: auto;
     }
-    .for-copy {
+    .how-copy {
         font-size: 0.88rem; color: var(--dim); line-height: 1.75;
+    }
+    @media (max-width: 860px) {
+        .how-steps { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 560px) {
+        .how-steps { grid-template-columns: 1fr; }
+    }
+
+    /* ── WHO IT SERVES ────────────────────────────────── */
+    #serves { padding: 8rem var(--gutter); }
+    .serves-head { margin-bottom: 5rem; }
+    .serves-head h2 {
+        font-family: 'Syne', sans-serif; font-weight: 800;
+        font-size: clamp(2.5rem, 6vw, 5rem);
+        letter-spacing: -0.025em; line-height: 1;
+        margin-top: 1.5rem; margin-bottom: 2rem;
+    }
+    .serves-head p {
+        font-size: clamp(1rem, 1.8vw, 1.15rem);
+        color: var(--silver); line-height: 1.8; max-width: 54ch;
+    }
+    .serves-head strong { color: var(--white); font-weight: 400; }
+
+    .serves-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1px;
+        border: 1px solid var(--rule-dk);
+    }
+    .serves-block {
+        padding: 2.5rem 2rem;
+        border-right: 1px solid var(--rule-dk);
+        transition: background 0.25s;
+    }
+    .serves-block:last-child { border-right: none; }
+    .serves-block:hover { background: #111111; }
+    .serves-block .label { color: var(--silver); margin-bottom: 1rem; display: block; }
+    .serves-block p { font-size: 0.9rem; color: var(--silver); line-height: 1.75; }
+
+    /* ── LIVE COMMERCE ────────────────────────────────── */
+    #live-commerce { padding: 8rem var(--gutter); }
+    .lc-inner {
+        max-width: 1320px; margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: start;
+    }
+    .lc-lead h2 {
+        font-family: 'Syne', sans-serif;
+        font-weight: 800;
+        font-size: clamp(2rem, 4.5vw, 3.5rem);
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+        color: var(--ink);
+        margin-top: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .lc-lead p {
+        font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+        color: var(--dim);
+        line-height: 1.8;
+        max-width: 48ch;
+    }
+    .lc-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2px;
+        margin-top: 0.5rem;
+    }
+    .lc-stat {
+        background: #EAEAE8;
+        padding: 2rem 1.8rem;
+        transition: background 0.25s;
+    }
+    .lc-stat:hover { background: #E0E0DE; }
+    .lc-stat-num {
+        font-family: 'Syne', sans-serif;
+        font-weight: 800;
+        font-size: clamp(1.8rem, 3vw, 2.5rem);
+        letter-spacing: -0.02em;
+        color: var(--ink);
+        line-height: 1;
+        margin-bottom: 0.6rem;
+    }
+    .lc-stat-label {
+        font-size: 0.78rem;
+        color: var(--dim);
+        line-height: 1.6;
+    }
+    .lc-platforms {
+        margin-top: 2rem;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--dim);
+    }
+    @media (max-width: 860px) {
+        .lc-inner { grid-template-columns: 1fr; gap: 3rem; }
     }
 
     /* ── NETWORK ──────────────────────────────────────── */
@@ -469,6 +600,13 @@
         font-family: 'Syne', sans-serif; font-weight: 800;
         font-size: clamp(2rem, 5vw, 4rem);
         letter-spacing: -0.02em; margin-top: 1.5rem;
+    }
+    .network-head p {
+        color: var(--silver);
+        font-size: 0.95rem;
+        margin-top: 1rem;
+        line-height: 1.75;
+        max-width: 56ch;
     }
 
     .cities {
@@ -503,6 +641,56 @@
 
     .network-note {
         font-size: 0.85rem; color: var(--silver); max-width: 60ch; line-height: 1.8;
+    }
+
+    /* ── TRACTION ──────────────────────────────────────── */
+    #traction { padding: 8rem var(--gutter); }
+    .traction-head { margin-bottom: 4rem; }
+    .traction-head h2 {
+        font-family: 'Syne', sans-serif; font-weight: 800;
+        font-size: clamp(2rem, 5vw, 4rem);
+        letter-spacing: -0.02em; color: var(--ink);
+        margin-top: 1.5rem;
+    }
+    .traction-head p {
+        color: var(--dim); max-width: 56ch;
+        font-size: 0.95rem; margin-top: 1rem; line-height: 1.75;
+    }
+    .traction-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2px;
+        margin-bottom: 3rem;
+    }
+    .traction-block {
+        background: #EAEAE8;
+        padding: 2.5rem 2rem;
+        transition: background 0.25s;
+    }
+    .traction-block:hover { background: #E0E0DE; }
+    .traction-block .label {
+        color: var(--dim);
+        margin-bottom: 1rem;
+        display: block;
+    }
+    .traction-block h3 {
+        font-family: 'Syne', sans-serif;
+        font-weight: 700;
+        font-size: 1.1rem;
+        letter-spacing: -0.01em;
+        color: var(--ink);
+        margin-bottom: 0.75rem;
+    }
+    .traction-block p {
+        font-size: 0.88rem;
+        color: var(--dim);
+        line-height: 1.75;
+    }
+    .traction-note {
+        font-size: 0.85rem; color: var(--dim); max-width: 56ch; line-height: 1.8;
+    }
+    @media (max-width: 860px) {
+        .traction-grid { grid-template-columns: 1fr; }
     }
 
     /* ── GET IN ───────────────────────────────────────── */
@@ -556,34 +744,62 @@
     .getin-note {
         font-size: 0.85rem;
         color: var(--dim);
-        max-width: 44ch;
+        max-width: 58ch;
         line-height: 1.65;
-        margin-bottom: 2.5rem;
+        margin-bottom: 1.25rem;
+    }
+    .getin-routes-label {
+        font-size: 0.68rem;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--dim);
+        margin-bottom: 0.9rem;
     }
 
     .getin-routes {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
         gap: 2px;
         margin-bottom: 3rem;
         border: 1px solid var(--rule);
     }
     .getin-routes a {
         background: var(--paper);
-        padding: 1.35rem 1.5rem;
-        font-size: 0.78rem;
-        letter-spacing: 0.04em;
+        padding: 1rem 1.2rem;
+        min-height: 76px;
+        font-size: 0.8rem;
+        letter-spacing: 0.03em;
         color: var(--ink);
         text-decoration: none;
-        transition: background 0.25s;
+        transition: background 0.2s, box-shadow 0.2s;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 1rem;
+        gap: 0.8rem;
+        cursor: pointer;
     }
-    .getin-routes a:hover { background: #E8E8E6; }
-    .getin-routes a span { color: var(--dim); font-size: 0.7rem; letter-spacing: 0.03em; }
-    .getin-routes a em { font-style: normal; color: var(--rule); }
+    .getin-routes a:hover {
+        background: #E8E8E6;
+        box-shadow: inset 0 0 0 1px var(--ink);
+    }
+    .getin-routes a:focus-visible {
+        outline: none;
+        box-shadow: inset 0 0 0 2px var(--ink);
+    }
+    .getin-routes a span {
+        color: var(--ink);
+        font-size: 0.73rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+    .getin-routes a em {
+        font-style: normal;
+        color: var(--ink);
+        font-size: 0.95rem;
+        line-height: 1;
+    }
 
     .getin-contact {
         display: flex; gap: 2rem; align-items: center;
@@ -619,6 +835,7 @@
     .stagger > .reveal:nth-child(3) { transition-delay: 0.16s; }
     .stagger > .reveal:nth-child(4) { transition-delay: 0.24s; }
     .stagger > .reveal:nth-child(5) { transition-delay: 0.32s; }
+    .stagger > .reveal:nth-child(6) { transition-delay: 0.40s; }
 
     /* ── RESPONSIVE ───────────────────────────────────── */
     @media (max-width: 860px) {
@@ -629,17 +846,16 @@
         .g-item.span-2 { grid-row: span 1; }
         .cities { grid-template-columns: 1fr 1fr; }
         .city:nth-child(5) { grid-column: span 2; }
-        .club-grid { grid-template-columns: 1fr 1fr; }
-        .club-block { border-right: none; border-bottom: 1px solid var(--rule-dk); }
-        .club-block:nth-child(odd) { border-right: 1px solid var(--rule-dk); }
+        .serves-grid { grid-template-columns: 1fr 1fr; }
+        .serves-block { border-right: none; border-bottom: 1px solid var(--rule-dk); }
+        .serves-block:nth-child(odd) { border-right: 1px solid var(--rule-dk); }
     }
     @media (max-width: 560px) {
         .gallery { grid-template-columns: 1fr; grid-template-rows: repeat(5, 160px); }
         .cities { grid-template-columns: 1fr; }
         .city:nth-child(5) { grid-column: span 1; }
-        .club-grid { grid-template-columns: 1fr; }
-        .club-block { border-right: none !important; }
-        .for-grid { grid-template-columns: 1fr; }
+        .serves-grid { grid-template-columns: 1fr; }
+        .serves-block { border-right: none !important; }
         .hero-meta { display: none; }
     }
     </style>
@@ -648,12 +864,12 @@
 
 <!-- ─── NAV ─────────────────────────────────────── -->
 <nav id="nav">
-    <a href="#" class="nav-logo">JUMP CUT</a>
+    <a href="#hero" class="nav-logo">JUMP CUT</a>
     <div class="nav-right">
         <a href="#studios">Studios</a>
-        <a href="#club">The Club</a>
+        <a href="#how">How It Works</a>
         <a href="#network">Network</a>
-        <a href="#getin" class="access">Request Access</a>
+        <a href="#getin" class="access">Get In Touch</a>
     </div>
     <button class="hamburger" id="burger" onclick="toggleNav()">
         <span></span><span></span><span></span>
@@ -662,64 +878,93 @@
 
 <div class="mobile-menu" id="mobileNav">
     <a href="#studios" onclick="closeNav()">Studios</a>
-    <a href="#club" onclick="closeNav()">The Club</a>
+    <a href="#how" onclick="closeNav()">How It Works</a>
     <a href="#network" onclick="closeNav()">Network</a>
-    <a href="#getin" onclick="closeNav()">Request Access</a>
+    <a href="#getin" onclick="closeNav()">Get In Touch</a>
 </div>
 
 <!-- ─── HERO ─────────────────────────────────────── -->
 <section id="hero" class="dk">
     <div class="hero-media">
-        <!-- Swap .hero-bg for <video> when reel is ready; keep poster on video for LCP -->
-        <img class="hero-bg" src="assets/image4.png" alt="Jump Cut Studios lounge with view into a glass-walled production space" width="1920" height="1080" fetchpriority="high" decoding="async">
-        <!--
-            <video autoplay muted loop playsinline poster="assets/image4.png">
-                <source src="reel.mp4" type="video/mp4">
-            </video>
-        -->
+        <img class="hero-bg" src="assets/image4.png" alt="Jump Cut Studios — production-ready lounge with glass-walled studio pods" width="1920" height="1080" fetchpriority="high" decoding="async">
     </div>
 
     <div class="hero-lower">
         <div class="hero-wordmark">
             <h1 class="display display-lg reveal">JUMP CUT<br>STUDIOS</h1>
-            <p class="tagline reveal">Your roster. Production-ready.</p>
+            <p class="tagline reveal">Professional studios near campus. Walk in with a deal, walk out with content that hits. Your NIL shoots, brand campaigns, and live selling — handled.</p>
         </div>
         <div class="hero-meta reveal">
-            <span class="label">Miami — Est. 2026</span>
+            <span class="label">Miami — Summer 2026</span>
             <div class="scroll-cue">Scroll</div>
         </div>
     </div>
 </section>
 
-<!-- ─── STUDIOS & FACILITY (design, gallery, capabilities) ─ -->
+<!-- ─── PROOF STRIP ──────────────────────────────── -->
+<section id="proof-strip" class="dk">
+    <div class="proof-strip-inner">
+        <span class="proof-item">Near Campus</span>
+        <span class="proof-item">Pro-Grade Gear</span>
+        <span class="proof-item">On-Site Creative Team</span>
+        <span class="proof-item">Coming to Your City</span>
+        <span class="proof-item">Athletes Never Pay</span>
+    </div>
+</section>
+
+<!-- ─── THESIS / WHY NOW ─────────────────────────── -->
+<section id="thesis" class="dk section">
+    <div class="thesis-inner">
+        <div class="thesis-lead reveal">
+            <span class="label">Why This Exists</span>
+            <h2>You signed the deal.<br>Now you need the content.</h2>
+        </div>
+        <div class="thesis-points">
+            <div class="thesis-point reveal">
+                <h3>The deal says "content." The calendar says "next week."</h3>
+                <p>Brands are signing athletes faster than ever. Every deal requires professional content — video, photo, live sessions — and most athletes are stuck figuring it out with a ring light and a roommate holding a phone. The deal deserves better. So do you.</p>
+            </div>
+            <div class="thesis-point reveal">
+                <h3>Live selling is real money — if you have the right setup.</h3>
+                <p>Athletes are already moving product on TikTok Shop, Whatnot, and Amazon Live. The ones making real revenue have professional production behind them — multi-camera, product staging, platform ops. Jump Cut puts that setup in the building so you can sell, not just stream.</p>
+            </div>
+            <div class="thesis-point reveal">
+                <h3>This is the studio your agent wishes existed.</h3>
+                <p>Near campus. Professional crew on-site. Same gear in every room. Show up, create, leave with finished assets. Your agent books the session. Your brand gets the deliverables. You focus on being you.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── STUDIOS & FACILITY ───────────────────────── -->
 <section id="studios">
     <div class="studios-intro lt section">
         <div class="wrap">
             <div class="canvas-statement reveal">
-                <span class="label">Studios &amp; facility</span>
-                <h2>The walls are black and white.<br>Your brand brings the color.</h2>
-                <p>Jump Cut is built as a neutral stage—textural, minimal, precise: angled panels, LED baseboards, Agam scenic shells. Behind the design is one facility built for the whole deal: identical capture rooms, live-ready infrastructure, edit bays, meeting and activation space, and a clubhouse layer where athletes and partners actually cross paths. Everything the work demands—nothing bolted on for show.</p>
+                <span class="label">Studios &amp; Facility</span>
+                <h2>Built for athletes.<br>Designed to make your story impossible to ignore.</h2>
+                <p>Each Jump Cut location is a 2,800–3,500 sq ft production facility with modular, sound-treated rooms and neutral, architectural finishes. Behind the design: identical capture rooms, live-ready streaming infrastructure, edit bays, meeting space, and a working lounge where athletes and partners cross paths between sessions. Everything the work demands. Nothing bolted on for show.</p>
             </div>
             <div class="gallery stagger">
                 <div class="g-item span-2 reveal">
                     <img src="assets/image7.png" alt="Lounge and bar at Jump Cut Studios" loading="lazy" width="800" height="520">
-                    <span class="g-label">Clubhouse</span>
+                    <span class="g-label">Athlete Lounge</span>
                 </div>
                 <div class="g-item reveal">
                     <img src="assets/image3.png" alt="Reception and Jump Cut Studios entry" loading="lazy" width="520" height="520">
-                    <span class="g-label">Entry &amp; reception</span>
+                    <span class="g-label">Entry &amp; Reception</span>
                 </div>
                 <div class="g-item reveal">
                     <img src="assets/image6.png" alt="Glass production pods with cameras and lighting" loading="lazy" width="520" height="520">
-                    <span class="g-label">Production studios</span>
+                    <span class="g-label">Production Studios</span>
                 </div>
                 <div class="g-item reveal">
                     <img src="assets/image5.png" alt="Lounge seating and streaming-ready space" loading="lazy" width="520" height="520">
-                    <span class="g-label">Live-ready</span>
+                    <span class="g-label">Live Commerce</span>
                 </div>
                 <div class="g-item reveal">
                     <img src="assets/image2.png" alt="Floor plan overview of Jump Cut Studios" loading="lazy" width="520" height="520">
-                    <span class="g-label">Program</span>
+                    <span class="g-label">Floor Plan</span>
                 </div>
             </div>
         </div>
@@ -729,103 +974,139 @@
             <div class="rooms stagger">
                 <div class="room reveal">
                     <div class="room-num">01</div>
-                    <div class="room-name">Production &amp; live</div>
-                    <div class="room-desc">Sound-treated stages for fireside and two-chair interviews, podcast, live selling, and greenscreen when the brief calls for it—each room runs the same formats. Dedicated streaming rigs, product staging, and multi-platform support are part of the building, not a pop-up.</div>
+                    <div class="room-name">Production studios</div>
+                    <div class="room-desc">4–6 sound-treated stages per location. Two-chair interviews, podcast, branded content, greenscreen — each room runs the same formats with the same equipment. Built for throughput, not one-off sessions.</div>
                     <div class="room-tag">Capture</div>
                 </div>
                 <div class="room reveal">
                     <div class="room-num">02</div>
-                    <div class="room-name">Standardized equipment</div>
-                    <div class="room-desc">Same cameras, lighting grid, audio path, and streaming backbone in every studio, at every location. Specs don’t drift—what you book in Miami is what you get in the next city.</div>
-                    <div class="room-tag">Network-wide</div>
+                    <div class="room-name">Live commerce rigs</div>
+                    <div class="room-desc">Dedicated streaming infrastructure for TikTok Shop, Whatnot, Amazon Live. Product staging, stream management, and reliable live-ready setups. Same rooms, different mode — flip from content to commerce in minutes.</div>
+                    <div class="room-tag">Live selling</div>
                 </div>
                 <div class="room reveal">
                     <div class="room-num">03</div>
-                    <div class="room-name">Post &amp; delivery</div>
-                    <div class="room-desc">Dual-screen edit bays and pro finishing tools—same-day roughs and polish when the schedule demands it. Files route to brand, athlete, and collective with rights documented; nothing ships half-finished.</div>
-                    <div class="room-tag">Finish &amp; ship</div>
+                    <div class="room-name">Standardized equipment</div>
+                    <div class="room-desc">Same cameras, lighting grid, audio path, and streaming backbone in every studio, at every location. What you book in Miami is what you get in Nashville. Specs don't drift.</div>
+                    <div class="room-tag">Network-wide</div>
                 </div>
                 <div class="room reveal">
                     <div class="room-num">04</div>
-                    <div class="room-name">Creative direction</div>
-                    <div class="room-desc">On-site directors and shot lists tied to the deal. Platform-specific optimization so what gets created is built to perform—not just to fill a drive.</div>
-                    <div class="room-tag">Direction</div>
+                    <div class="room-name">Post &amp; delivery</div>
+                    <div class="room-desc">Dual-screen edit bays with centralized finishing. Same-day roughs. Files route to brand, athlete, and collective with rights documented. Nothing ships half-finished.</div>
+                    <div class="room-tag">Finish &amp; ship</div>
                 </div>
                 <div class="room reveal">
                     <div class="room-num">05</div>
-                    <div class="room-name">Meetings &amp; activations</div>
-                    <div class="room-desc">Briefs, reviews, compliance conversations, and quiet prep—plus configurable space for launches, sponsor events, and media days when the calendar calls for a room that isn’t a set.</div>
-                    <div class="room-tag">Sessions &amp; events</div>
+                    <div class="room-name">Creative direction</div>
+                    <div class="room-desc">On-site directors and shot lists tied to the deal. Platform-specific optimization so what gets created is built to perform — not just to fill a deliverables folder.</div>
+                    <div class="room-tag">Direction</div>
                 </div>
                 <div class="room reveal">
                     <div class="room-num">06</div>
-                    <div class="room-name">Clubhouse</div>
-                    <div class="room-desc">A real lounge and circulation—not a holding pen. Athletes, brands, and teams cross paths on purpose between sets: coffee, collisions, and the conversations that don’t happen over email.</div>
+                    <div class="room-name">Meetings, activations &amp; lounge</div>
+                    <div class="room-desc">Briefs, reviews, compliance conversations, sponsor events, media days — plus a real lounge where athletes, brands, and teams cross paths on purpose between sets.</div>
                     <div class="room-tag">Between takes</div>
                 </div>
             </div>
-            <div class="rooms-note reveal">Blackmagic Studio Camera 4K — Nanlite — Shure SM7B — ATEM Mini Pro ISO — Stream Deck XL — repeated across every production studio, every location.</div>
+            <div class="rooms-note reveal">Blackmagic Studio Camera 4K — Nanlite — Shure SM7B — ATEM Mini Pro ISO — Elgato Stream Deck XL — repeated across every studio, every location.</div>
         </div>
     </div>
 </section>
 
-<!-- ─── THE CLUB ────────────────────────────────────── -->
-<section id="club" class="dk section">
+<!-- ─── HOW IT WORKS ─────────────────────────────── -->
+<section id="how" class="lt section">
     <div class="wrap">
-        <div class="club-pull reveal">
-            <span class="label">The Club</span>
-            <h2>You can hang.<br>But you're here to work.</h2>
-            <p>Jump Cut isn't a studio you rent by the hour. It's a place athletes want to be — and a place <strong>brands want their athletes to be</strong>. The lounge is real. The community is real. But what makes it worth belonging to is what walks out of here: <strong>content that fulfills deals, builds brands, and moves careers forward.</strong></p>
+        <div class="how-head reveal">
+            <span class="label">How It Works</span>
+            <h2>Show up. Create. Done.</h2>
+            <p>Your agent or collective books the session. We handle everything else. Here's what it looks like.</p>
         </div>
-        <div class="club-grid stagger">
-            <div class="club-block reveal">
-                <span class="label">For Athletes</span>
-                <p>Your deals require content. This is where that content gets made — and it looks better than anything shot on a phone. No cost to you. Your deals fund everything.</p>
+        <div class="how-steps stagger">
+            <div class="how-step reveal">
+                <div class="how-num">01</div>
+                <div class="how-title">Your session gets booked</div>
+                <div class="how-copy">Your agent, collective, or brand partner books your production time. Shot lists, creative direction, and platform specs are prepped before you walk in. You don't touch logistics.</div>
             </div>
-            <div class="club-block reveal">
-                <span class="label">For Brands</span>
-                <p>A dedicated environment for your athlete partnerships. Managed production, branded studio time, live commerce access. Direct pipeline to content that actually closes.</p>
+            <div class="how-step reveal">
+                <div class="how-num">02</div>
+                <div class="how-title">You show up and create</div>
+                <div class="how-copy">Pro crew on-site handles camera, lighting, audio, and direction. You focus on being you. One session can cover brand content, social cuts, and live selling — we maximize every hour you're in the building.</div>
             </div>
-            <div class="club-block reveal">
-                <span class="label">For NIL Collectives</span>
-                <p>Your athletes need content infrastructure to fulfill their deals. Plug them in. We handle production and delivery. You manage the relationships.</p>
+            <div class="how-step reveal">
+                <div class="how-num">03</div>
+                <div class="how-title">Content gets finished fast</div>
+                <div class="how-copy">Our edit team turns your session around quickly. Same-day roughs when the timeline is tight. Final assets built to platform specs — ready to post, ready to perform.</div>
             </div>
-            <div class="club-block reveal">
-                <span class="label">For Universities</span>
-                <p>Official content partner for your athletic department. Compliance-friendly. Professional outputs. Every athlete on your roster has a space built for them.</p>
+            <div class="how-step reveal">
+                <div class="how-num">04</div>
+                <div class="how-title">Everyone gets what they need</div>
+                <div class="how-copy">Finished content routes to you, your brand partner, and your collective — with rights documented and formats matched to every platform. The deal is fulfilled. The content is professional. Everyone wins.</div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ─── WHO IT'S FOR ───────────────────────────────── -->
-<section id="for" class="lt section">
+<!-- ─── WHO IT SERVES ─────────────────────────────── -->
+<section id="serves" class="dk section">
     <div class="wrap">
-        <div class="for-head reveal">
-            <span class="label">The Right Room</span>
-            <h2>Built for the people behind the athlete.</h2>
-            <p>Brands want better content. Collectives want fulfilled deals. Universities want athlete development. Agents want their clients positioned correctly. Jump Cut is the answer to all four.</p>
+        <div class="serves-head reveal">
+            <span class="label">Who It Serves</span>
+            <h2>Athletes first.<br>Partners aligned.</h2>
+            <p>Jump Cut is built around athlete outcomes first, with the partner infrastructure to match. Agents and advisors get reliable execution, brands get campaign-ready output, and collectives and universities get a system that works at roster scale.</p>
         </div>
-        <div class="for-grid stagger">
-            <div class="for-block reveal">
-                <div class="for-num">01</div>
-                <div class="for-who">Brands &amp; Sponsors</div>
-                <div class="for-copy">Stop chasing athletes for content. Book the studio. Brief the production team. Receive campaign-ready assets. Your budget produces output, not overhead.</div>
+        <div class="serves-grid stagger">
+            <div class="serves-block reveal">
+                <span class="label">Athletes</span>
+                <p>This is your studio. Professional shoots, live selling sessions, social content — all handled by a real crew in a space designed around you. You never pay. Your deals fund everything. You just show up and create.</p>
             </div>
-            <div class="for-block reveal">
-                <div class="for-num">02</div>
-                <div class="for-who">NIL Collectives</div>
-                <div class="for-copy">Content fulfillment built into every deal you structure. Your athletes walk in, create, walk out. You get assets. The brand gets deliverables. Everyone's happy.</div>
+            <div class="serves-block reveal">
+                <span class="label">Agents &amp; Advisors</span>
+                <p>Every client on your roster needs better content. Jump Cut gives you a production home you can book on demand — professional output, fast turnaround, no setup headaches. One session changes the quality of every deal conversation you have next.</p>
             </div>
-            <div class="for-block reveal">
-                <div class="for-num">03</div>
-                <div class="for-who">Athletic Departments</div>
-                <div class="for-copy">A production facility your roster actually uses. Near campus, built for athletes, operated by people who understand the NIL environment. Compliance-ready.</div>
+            <div class="serves-block reveal">
+                <span class="label">Brands &amp; Agencies</span>
+                <p>Stop chasing athletes for content. Book the studio, brief the creative team, get campaign-ready assets back fast. Your athlete partnerships finally have a production home — managed, professional, and built for the formats that actually perform.</p>
             </div>
-            <div class="for-block reveal">
-                <div class="for-num">04</div>
-                <div class="for-who">Athlete Agents</div>
-                <div class="for-copy">Your clients' NIL value compounds when their content is professional. One session here changes the quality of every deal conversation you have next week.</div>
+            <div class="serves-block reveal">
+                <span class="label">NIL Collectives</span>
+                <p>Content fulfillment shouldn't be the bottleneck in your deals. Plug your athletes into Jump Cut. We handle production and delivery. You manage the relationships. Every deal gets fulfilled on time, on spec.</p>
+            </div>
+            <div class="serves-block reveal">
+                <span class="label">Universities</span>
+                <p>A compliance-friendly production partner near campus. Professionally operated, purpose-built for the NIL environment. Your athletes get access to real facilities — without your department managing the production or the liability.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── LIVE COMMERCE ─────────────────────────────── -->
+<section id="live-commerce" class="lt section">
+    <div class="wrap">
+        <div class="lc-inner">
+            <div class="lc-lead reveal">
+                <span class="label">Live Commerce</span>
+                <h2>You have the audience.<br>Now you have the stage.</h2>
+                <p>Every production room at Jump Cut doubles as a live selling stage. Go live on TikTok Shop, Whatnot, or Amazon Live with real production behind you — product staging, stream operations, and platform support handled by our crew. Athletes who sell with professional production behind them sell more. Period.</p>
+                <p class="lc-platforms" style="margin-top: 2.5rem;">TikTok Shop · Whatnot · Amazon Live · Instagram</p>
+            </div>
+            <div class="lc-stats stagger reveal">
+                <div class="lc-stat">
+                    <div class="lc-stat-num">9–30%</div>
+                    <div class="lc-stat-label">Live selling conversion rate — vs. 2–3% for traditional posts</div>
+                </div>
+                <div class="lc-stat">
+                    <div class="lc-stat-num">Live-ready</div>
+                    <div class="lc-stat-label">Professional stream setup and support — built for consistency, not improvised phone setups</div>
+                </div>
+                <div class="lc-stat">
+                    <div class="lc-stat-num">Flip-ready</div>
+                    <div class="lc-stat-label">Same room goes from brand shoot to live selling in minutes — no setup between sessions</div>
+                </div>
+                <div class="lc-stat">
+                    <div class="lc-stat-num">You sell</div>
+                    <div class="lc-stat-label">We produce. Product staging, real-time platform management, and stream quality — all handled</div>
+                </div>
             </div>
         </div>
     </div>
@@ -836,73 +1117,100 @@
     <div class="wrap">
         <div class="network-head reveal">
             <span class="label">The Network</span>
-            <h2>Five cities. One standard.</h2>
+            <h2>We go where the athletes are.</h2>
+            <p>Every Jump Cut location runs the same design, same gear, same crew standard. If you've been to one, you know them all. Starting in Miami, expanding to SEC markets where athlete content demand is highest.</p>
         </div>
         <div class="cities stagger">
             <div class="city reveal">
                 <div class="city-name">Miami</div>
-                <div class="city-detail">Buena Vista District</div>
-                <div class="city-detail">University of Miami</div>
-                <div class="city-status"><span class="dot live"></span> Live — Summer 2026</div>
+                <div class="city-detail">Near University of Miami</div>
+                <div class="city-detail">Prototype location</div>
+                <div class="city-status"><span class="dot live"></span> Launching Summer 2026</div>
+            </div>
+            <div class="city reveal">
+                <div class="city-name">Nashville</div>
+                <div class="city-detail">Near Vanderbilt</div>
+                <div class="city-detail">SEC market</div>
+                <div class="city-status"><span class="dot"></span> Expansion Target</div>
             </div>
             <div class="city reveal">
                 <div class="city-name">Knoxville</div>
-                <div class="city-detail">Old North District</div>
-                <div class="city-detail">University of Tennessee</div>
-                <div class="city-status"><span class="dot"></span> Opening 2027</div>
+                <div class="city-detail">Near University of Tennessee</div>
+                <div class="city-detail">SEC market</div>
+                <div class="city-status"><span class="dot"></span> Expansion Target</div>
             </div>
             <div class="city reveal">
                 <div class="city-name">College Station</div>
-                <div class="city-detail">South Corridor</div>
-                <div class="city-detail">Texas A&amp;M</div>
-                <div class="city-status"><span class="dot"></span> Opening 2027</div>
+                <div class="city-detail">Near Texas A&amp;M</div>
+                <div class="city-detail">SEC market</div>
+                <div class="city-status"><span class="dot"></span> Expansion Target</div>
             </div>
             <div class="city reveal">
-                <div class="city-name">Austin</div>
-                <div class="city-detail">East Sixth</div>
-                <div class="city-detail">UT Austin</div>
-                <div class="city-status"><span class="dot"></span> Accepting Interest</div>
-            </div>
-            <div class="city reveal">
-                <div class="city-name">Los Angeles</div>
-                <div class="city-detail">Vernon District</div>
-                <div class="city-detail">USC</div>
-                <div class="city-status"><span class="dot"></span> Accepting Interest</div>
+                <div class="city-name">Baton Rouge</div>
+                <div class="city-detail">Near LSU</div>
+                <div class="city-detail">SEC market</div>
+                <div class="city-status"><span class="dot"></span> Expansion Target</div>
             </div>
         </div>
-        <p class="network-note reveal">Near campus. Off the main strip. Same signature design in every city. Same equipment. Same standard. Your athletes move between locations and never skip a beat.</p>
+        <p class="network-note reveal">Same studios. Same gear. Same experience. Wherever you transfer, wherever your brand partner is — there's a Jump Cut near campus. More cities coming as we grow.</p>
+    </div>
+</section>
+
+<!-- ─── TRACTION ──────────────────────────────────── -->
+<section id="traction" class="lt section">
+    <div class="wrap">
+        <div class="traction-head reveal">
+            <span class="label">What's Happening</span>
+            <h2>Doors open this summer.</h2>
+            <p>Jump Cut isn't a concept. The studios are designed, the gear is specified, and Miami launches Summer 2026. Here's the timeline.</p>
+        </div>
+        <div class="traction-grid stagger">
+            <div class="traction-block reveal">
+                <span class="label">Summer 2026</span>
+                <h3>Miami Opens</h3>
+                <p>First location goes live. NIL content sessions, brand shoots, and live commerce — all running from day one. If you're in Miami, you're in first.</p>
+            </div>
+            <div class="traction-block reveal">
+                <span class="label">Fall 2026</span>
+                <h3>Football Season</h3>
+                <p>Full production schedule through the fall. Athletes creating content between games, brands activating partnerships in the building, live selling sessions running weekly.</p>
+            </div>
+            <div class="traction-block reveal">
+                <span class="label">2027</span>
+                <h3>New Cities</h3>
+                <p>Expansion into SEC markets — Nashville, Knoxville, College Station, Baton Rouge. Same studios, same standard, closer to your campus.</p>
+            </div>
+        </div>
+        <p class="traction-note reveal" style="margin-top: 2rem;">Built by a team with backgrounds in experiential production, content studios, and NIL strategy.</p>
     </div>
 </section>
 
 <!-- ─── GET IN ──────────────────────────────────────── -->
-<section id="getin" class="lt section">
+<section id="getin" class="lt section" style="padding-top: 4rem;">
     <div class="wrap">
+        <hr class="rule-lt" style="margin-bottom: 8rem;">
         <div class="getin-headline reveal">
-            <span class="label">Get In</span>
-            <h2>This is invite-first.</h2>
-            <p>We're building the network with the right partners. Inquiries run through email and our intake flow—so we can route you quickly and keep context in one place.</p>
+            <span class="label">Get In Touch</span>
+            <h2>Let's talk.</h2>
+            <p>We're building this with athletes, agents, brands, collectives, and universities who want production that actually performs. Two ways to start a conversation.</p>
         </div>
         <div class="getin-actions reveal">
             <a class="getin-btn getin-btn-primary" href="mailto:readysetgo@jumpcut.live?subject=Jump%20Cut%20Studios%20inquiry">Email readysetgo@jumpcut.live</a>
-            <a class="getin-btn getin-btn-secondary" href="intake.html">Start intake</a>
+            <a class="getin-btn getin-btn-secondary" href="intake.html">Start intake form</a>
         </div>
-        <p class="getin-note reveal">Use either path. The intake form structures your first pass; email works if you already know what you need. We typically reply within one business day.</p>
+        <p class="getin-note reveal">Use either path above to start. If your use case is specific, choose a route below so your inquiry lands with the right team fast. We typically reply within one business day.</p>
+        <p class="getin-routes-label reveal">Route your inquiry directly</p>
         <div class="getin-routes stagger">
-            <a class="reveal" href="mailto:readysetgo@jumpcut.live?subject=Brand%20partnership%20inquiry"><span>Brand / agency</span><em>→</em></a>
-            <a class="reveal" href="mailto:readysetgo@jumpcut.live?subject=Collective%20inquiry"><span>Collective</span><em>→</em></a>
-            <a class="reveal" href="mailto:readysetgo@jumpcut.live?subject=University%20%2F%20athletic%20department%20inquiry"><span>University</span><em>→</em></a>
-            <a class="reveal" href="mailto:readysetgo@jumpcut.live?subject=Athlete%20representation%20inquiry"><span>Agent / advisor</span><em>→</em></a>
+            <a class="reveal" href="mailto:readysetgo@jumpcut.live?subject=Athlete%20representation%20inquiry"><span>Agent / Advisor</span><em>&rarr;</em></a>
+            <a class="reveal" href="mailto:readysetgo@jumpcut.live?subject=Brand%20partnership%20inquiry"><span>Brand / Agency</span><em>&rarr;</em></a>
+            <a class="reveal" href="mailto:readysetgo@jumpcut.live?subject=Collective%20inquiry"><span>NIL Collective</span><em>&rarr;</em></a>
+            <a class="reveal" href="mailto:readysetgo@jumpcut.live?subject=University%20%2F%20athletic%20department%20inquiry"><span>University / Athletic Dept</span><em>&rarr;</em></a>
+            <a class="reveal" href="mailto:readysetgo@jumpcut.live?subject=Partnership%20inquiry"><span>Partner / Other</span><em>&rarr;</em></a>
         </div>
         <div class="getin-contact reveal">
             <a href="https://jumpcut.live">jumpcut.live</a>
             <span class="contact-sep">/</span>
             <a href="mailto:readysetgo@jumpcut.live">readysetgo@jumpcut.live</a>
-            <span class="contact-sep">/</span>
-            <a href="#">Instagram</a>
-            <span class="contact-sep">/</span>
-            <a href="#">TikTok</a>
-            <span class="contact-sep">/</span>
-            <a href="#">LinkedIn</a>
         </div>
     </div>
 </section>
@@ -910,7 +1218,7 @@
 <!-- ─── FOOTER ─────────────────────────────────────── -->
 <footer class="lt">
     <div class="foot-brand">JUMP CUT STUDIOS</div>
-    <div class="foot-right">© 2026 Jump Cut Studios</div>
+    <div class="foot-right">&copy; 2026 Jump Cut Studios &middot; A Nifeworks LLC company</div>
 </footer>
 
 <script>
